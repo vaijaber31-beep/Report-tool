@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Report Tool - By Mastar</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#0d1117;color:#c9d1d9;padding:20px}
+.container{max-width:600px;margin:20px auto}
+h1{color:#fff;text-align:center;margin-bottom:20px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;margin-bottom:15px}
+label{display:block;margin:12px 0 5px;color:#8b949e;font-size:14px}
+input,select,textarea{width:100%;padding:12px;background:#0d1117;border:1px solid #30363d;border-radius:8px;color:#fff;outline:none}
+input:focus,textarea:focus{border-color:#58a6ff}
+textarea{height:120px;resize:vertical}
+.btn{width:100%;padding:14px;background:#238636;color:#fff;border:none;border-radius:8px;font-weight:bold;font-size:16px;margin-top:15px;cursor:pointer}
+.btn:hover{background:#2ea043}
+.preview{background:#0d1117;border:1px dashed #30363d;padding:15px;border-radius:8px;margin-top:15px;white-space:pre-wrap;font-family:monospace;font-size:13px}
+.btn2{background:#1f6feb}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🐙 GitHub Report Tool</h1>
+
+<div class="card">
+<label>Report Type</label>
+<select id="type">
+<option>Bug Report</option>
+<option>Feature Request</option>
+<option>Security Vulnerability</option>
+<option>Abuse / Spam Repo</option>
+<option>Copyright Violation (DMCA)</option>
+</select>
+
+<label>GitHub Repo / User Link</label>
+<input id="link" placeholder="https://github.com/user/repo">
+
+<label>Issue Title</label>
+<input id="title" placeholder="Ex: Stolen code / Malicious tool">
+
+<label>Details / Proof</label>
+<textarea id="details" placeholder="Kita oise? Proof, screenshot link, details lekho Mastar..."></textarea>
+
+<button class="btn" onclick="generate()">Generate Report</button>
+
+<div id="preview" class="preview" style="display:none"></div>
+<button id="goBtn" class="btn btn2" style="display:none" onclick="goGitHub()">Open GitHub Report Page →</button>
+</div>
+
+</div>
+
+<script>
+function generate(){
+ const t = document.getElementById('type').value;
+ const l = document.getElementById('link').value;
+ const ti = document.getElementById('title').value;
+ const d = document.getElementById('details').value;
+
+ const text = `**Report Type:** ${t}
+**Target Link:** ${l}
+**Title:** ${ti}
+
+**Details / Evidence:**
+${d}
+
+---
+Reported via GitHub Report Tool by Mastar`;
+
+ const p = document.getElementById('preview');
+ p.style.display='block';
+ p.innerText = text;
+ navigator.clipboard.writeText(text);
+ document.getElementById('goBtn').style.display='block';
+ alert('Report copied! ✅ Mastar');
+}
+
+function goGitHub(){
+ const type = document.getElementById('type').value;
+ if(type.includes('Abuse')) window.open('https://github.com/contact/report-abuse','_blank');
+ else if(type.includes('Copyright')) window.open('https://github.com/contact/dmca','_blank');
+ else if(type.includes('Security')) window.open('https://github.com/contact/report-content','_blank');
+ else window.open('https://github.com/contact','_blank');
+}
+</script>
+</body>
+</html>
